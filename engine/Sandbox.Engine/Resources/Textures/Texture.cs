@@ -66,9 +66,17 @@ public partial class Texture : Resource, IDisposable
 	/// </summary>
 	internal void CopyFrom( Texture texture )
 	{
-		var n = native;
-		native = IntPtr.Zero;
-		MainThread.Queue( () => n.DestroyStrongHandle() );
+		if ( !native.IsNull )
+		{
+			var n = native;
+			native = IntPtr.Zero;
+
+			// Evict from NativeResourceCache so a new wrapper can be created
+			// if the same native pointer is reused (e.g. RenderTarget pool, TextBlock rebuild).
+			NativeResourceCache.Remove( n.GetBindingPtr().ToInt64() );
+
+			MainThread.Queue( () => n.DestroyStrongHandle() );
+		}
 
 		// Copy the handle from the other texture.
 		// Important - we can't just use the handle because when
