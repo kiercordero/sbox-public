@@ -556,6 +556,12 @@ internal partial class GameInstanceDll : Engine.IGameInstanceDll
 				}
 
 				Log.Warning( e, e.Message );
+
+				if ( Application.IsEditor )
+				{
+					// raise in editor, load has failed and we should alert the user
+					throw;
+				}
 			}
 
 			LoadingScreen.IsVisible = false;
