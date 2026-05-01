@@ -35,11 +35,13 @@ public static class MenuHelpers
 
 			if ( await MenuUtility.TryJoinLobby( package.FullIdent ) )
 				return;
-		}
 
-		// Dedicated server only: show server list
-		if ( launchMode == "dedicatedserveronly" )
+			Log.Info( $"Couldn't join a lobby - making a game" );
+			LoadingScreen.IsVisible = false;
+		}
+		else if ( launchMode == "dedicatedserveronly" )
 		{
+			// Dedicated server only: show server list
 			Game.Overlay.ShowServerList( new ServerListConfig( package.FullIdent ) );
 			return;
 		}
