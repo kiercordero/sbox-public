@@ -2,7 +2,6 @@
 using Sandbox.DataModel;
 using Sandbox.Diagnostics;
 using Sandbox.Modals;
-using Sandbox.Network;
 
 public static class MenuHelpers
 {
@@ -166,7 +165,7 @@ public static class MenuHelpers
 
 		menu.AddSpacer();
 		menu.AddOption( "corporate_fare", $"View Creator", () => Game.Overlay.ShowOrganizationModal( package.Org ) );
-		menu.AddOption( "star", "Rate Game", () => Game.Overlay.ShowReviewModal( package ) );
+		menu.AddOption( "star", "Review Game", () => Game.Overlay.ShowReviewModal( package ) );
 	}
 
 	static void OpenMapMenu( Panel source, Package package )
